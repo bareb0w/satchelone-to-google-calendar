@@ -1,6 +1,6 @@
 import requests
 import datetime
-def get_events(authorization,user_id,start_date=datetime.datetime.now().strftime("%Y-%m-%d")):
+def get_events(authorization,user_id,school_id,start_date=datetime.datetime.now().strftime("%Y-%m-%d")):
     
     headers = {
         'authority': 'api.satchelone.com',
@@ -26,7 +26,7 @@ def get_events(authorization,user_id,start_date=datetime.datetime.now().strftime
     }
 
     response = requests.get(
-        f'https://api.satchelone.com/api/timetable/school/***REMOVED***/student/{user_id}',
+        f'https://api.satchelone.com/api/timetable/school/{school_id}/student/{user_id}',
         params=params,
         headers=headers,
     )

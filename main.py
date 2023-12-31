@@ -171,7 +171,7 @@ load_dotenv()
 
 AUTHORIZATION = os.getenv('AUTHORIZATION')
 USER_ID = os.getenv('USER_ID')
-
+SCHOOL_ID = os.getenv('SCHOOL_ID')
 
 
 if __name__ == "__main__":

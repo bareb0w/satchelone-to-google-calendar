@@ -1,10 +1,10 @@
 import requests
-def get_todos(from_date,to_date):
+def get_todos(authorization,from_date,to_date):
     headers = {
         'authority': 'api.satchelone.com',
         'accept': 'application/smhw.v2021.5+json',
         'accept-language': 'en-GB,en;q=0.8',
-        'authorization': '***REMOVED***',
+        'authorization': authorization,
         'if-none-match': 'W/"2cf570b02d680179150fcb1441d7f1ed"',
         'origin': 'https://www.satchelone.com',
         'referer': 'https://www.satchelone.com/',
@@ -21,12 +21,12 @@ def get_todos(from_date,to_date):
 
     params = {
         'add_dateless': 'true',
-        'from': '2023-12-31',
-        'to': '2024-01-14',
+        'from': from_date,
+        'to': to_date,
     }
-    params = {'add_dateless':'true'}
+    #params = {'add_dateless':'true'}
 
     response = requests.get('https://api.satchelone.com/api/todos', params=params, headers=headers)
     return response.json()
 
-print(len(get_todos('2023-12-31','2024-01-14')['todos']))
+#print(len(get_todos('2023-12-31','2024-01-14')['todos']))
