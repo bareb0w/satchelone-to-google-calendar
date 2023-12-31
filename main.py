@@ -164,6 +164,13 @@ def add_events_to_calendar(service):
     for event in add_to_calendar.values():
         create_event(service,SCHOOL_CALENDAR["id"],*event)
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+AUTHORIZATION = os.getenv('AUTHORIZATION')
+USER_ID = os.getenv('USER_ID')
 
 
 
