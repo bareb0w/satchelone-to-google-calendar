@@ -1,12 +1,12 @@
 import requests
 import datetime
-def get_events(start_date=datetime.datetime.now().strftime("%Y-%m-%d")):
+def get_events(authorization,user_id,start_date=datetime.datetime.now().strftime("%Y-%m-%d")):
     
     headers = {
         'authority': 'api.satchelone.com',
         'accept': 'application/smhw.v2021.5+json',
         'accept-language': 'en-GB,en;q=0.8',
-        'authorization': '***REMOVED***',
+        'authorization': authorization,
         'content-type': 'application/json',
         'origin': 'https://www.satchelone.com',
         'referer': 'https://www.satchelone.com/',
@@ -26,7 +26,7 @@ def get_events(start_date=datetime.datetime.now().strftime("%Y-%m-%d")):
     }
 
     response = requests.get(
-        'https://api.satchelone.com/api/timetable/school/***REMOVED***/student/***REMOVED***',
+        f'https://api.satchelone.com/api/timetable/school/***REMOVED***/student/{user_id}',
         params=params,
         headers=headers,
     )

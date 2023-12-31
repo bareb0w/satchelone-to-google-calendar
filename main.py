@@ -90,7 +90,7 @@ def get_all_events_from_satchel():
     start_date = datetime.datetime.now()
     add_to_calendar = {}
     for _ in range(10):
-        events = get_events.get_events(start_date.strftime("%Y-%m-%d"))
+        events = get_events.get_events(AUTHORIZATION,USER_ID,start_date.strftime("%Y-%m-%d"))
         days = events['weeks'][0]['days']
         for day in days:
             if day['lessons'] == []:
@@ -121,7 +121,7 @@ def get_all_school_events():
     add_to_calendar = {}
     start_date = datetime.datetime.now()
     for _ in range(100):
-        events = get_events.get_events(start_date.strftime("%Y-%m-%d"))
+        events = get_events.get_events(AUTHORIZATION,USER_ID,start_date.strftime("%Y-%m-%d"))
 
         school_events = events['weeks'][0]['events']
         for school_event in school_events:
@@ -157,13 +157,16 @@ def add_events_to_calendar(service):
     for event in add_to_calendar.values():
         create_event(service,SCHOOL_CALENDAR["id"],*event)
 
-    #add_to_calendar,end_date = get_all_school_events()
-    #add_to_calendar = remove_duplicates(service,add_to_calendar,end_date)
-    #print(add_to_calendar)
+    add_to_calendar,end_date = get_all_school_events()
+    add_to_calendar = remove_duplicates(service,add_to_calendar,end_date)
+    print(add_to_calendar)
 
-    #for event in add_to_calendar.values():
-    #    create_event(service,SCHOOL_CALENDAR["id"],*event)
+    for event in add_to_calendar.values():
+        create_event(service,SCHOOL_CALENDAR["id"],*event)
 
+
+AUTHORIZATION = '***REMOVED***'
+USER_ID = '***REMOVED***'
 
 if __name__ == "__main__":
     service = get_service()
