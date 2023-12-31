@@ -165,8 +165,7 @@ def add_events_to_calendar(service):
         create_event(service,SCHOOL_CALENDAR["id"],*event)
 
 
-AUTHORIZATION = '***REMOVED***'
-USER_ID = '***REMOVED***'
+
 
 if __name__ == "__main__":
     service = get_service()
