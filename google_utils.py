@@ -73,7 +73,8 @@ def check_if_event_exists(service, calendarId, name, room, details, start, end):
 
 
 def get_colorId(name):
-    return ("8"
+    return (
+        "8"
         if name == "Supervised Study"
         else "7"
         if name == "Physics"
@@ -121,7 +122,7 @@ def update_event(service, calendarId, eventId, name, room, details, start, end):
         "dateTime": end,
         "timeZone": "Europe/London",
     }
-    event['colorId'] = get_colorId(name)
+    event["colorId"] = get_colorId(name)
 
     updated_event = (
         service.events()
