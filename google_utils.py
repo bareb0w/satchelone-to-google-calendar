@@ -59,6 +59,19 @@ def convert_to_datetime(date_string):
     return datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S%z")
 
 
+def adjust_time_datetime(start, end):
+    if end.hour == 10:
+        # print("Lesson 2")
+        start = start.replace(hour=10, minute=20)
+        end = end.replace(hour=11, minute=20)
+
+    elif end.hour == 12:
+        # print("Lesson 4")
+        start = start.replace(hour=13, minute=0)
+        end = end.replace(hour=14, minute=0)
+    return start, end
+
+
 def check_if_event_exists(service, calendarId, name, room, details, start, end):
     # converts the following date format into a datetime object
     # 2024-01-18T12:20:00+00:00
@@ -67,8 +80,17 @@ def check_if_event_exists(service, calendarId, name, room, details, start, end):
     start = convert_to_datetime(start)
 
     events = get_all_events_from_google_calendar(service, calendarId, start, end)
+    # start, end = adjust_time_datetime(start, end)
+    # events2 = get_all_events_from_google_calendar(service, calendarId, start, end)
     if events == []:
         return False
+    else:
+        return events
+    if events == [] and events2 == []:
+        return False
+    print(events)
+    events.extend(events2)
+    print(events2)
     return events
 
 
@@ -87,6 +109,7 @@ def get_colorId(name):
 
 
 def create_event(service, calendarId, name, room, details, start, end):
+    start, end = adjust_time(start, end)
     event = {
         "summary": name,
         "location": room,
@@ -107,7 +130,23 @@ def create_event(service, calendarId, name, room, details, start, end):
     return event
 
 
+def adjust_time(start, end):
+    # print(start.split(":")[0].split("T")[1])
+    # print(end[-14:])
+    if "10:00:00+00:00" == start[-14:]:
+        # print("Lesson 2")
+        start = start.replace("10:00:00+00:00", "10:20:00+00:00")
+        end = end.replace("11:00:00+00:00", "11:20:00+00:00")
+    elif "12:20:00+00:00" == start[-14:]:
+        # print("Lesson 4")
+        start = start.replace("12:20:00+00:00", "13:00:00+00:00")
+        end = end.replace("13:20:00+00:00", "14:00:00+00:00")
+    return start, end
+
+
 def update_event(service, calendarId, eventId, name, room, details, start, end):
+    start, end = adjust_time(start, end)
+
     # First retrieve the event from the API.
     event = service.events().get(calendarId=calendarId, eventId=eventId).execute()
 

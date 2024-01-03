@@ -1,10 +1,7 @@
-import get_events
-import datetime
 import os.path
 from google_utils import (
     get_service,
     get_school_calendar,
-    get_all_events_from_google_calendar,
     create_event,
     update_event,
     check_if_event_exists,
