@@ -14,8 +14,9 @@
 ## Customisation
 
 - If you want to set custom colors for the events create an `COLORID` environment variable in the format of a python dictionary with the name of the event (from satchelone) and the colorid which ranges from 1-11
-- If your lesson times vary from times that satchelone shows then you can create an `TIMEOFFSET` environment variable in the format of a python dictionary with the time in the format `hh,mm` as the key and the new time as the value in the same format and add the length of your lessons in the LESSONLENGTH environment variable
-- If you want to change the name of the calendar that the events are added to then change the `CALENDARNAME` environment variable. Make sure the calendar exists in your google account first.  
+- If your lesson times vary from times that satchelone shows then you can create an `TIMEOFFSET` environment variable in the format of a python dictionary with the time in the format `hh,mm` as the key and the new time as the value in the same format and add the length of your lessons in the `LESSONLENGTH` environment variable
+- If you want to change the name of the calendar that the events are added to then change the `CALENDARNAME` environment variable. Make sure the calendar exists in your google account first.
+
 ## Example .env file
 
 ``` python
