@@ -86,15 +86,20 @@ def check_if_event_exists(service, calendarId, name, room, details, start, end):
         return False
     else:
         return events
-    if events == [] and events2 == []:
-        return False
-    print(events)
-    events.extend(events2)
-    print(events2)
-    return events
 
 
 def get_colorId(name):
+    import dotenv
+    import os
+
+    dotenv.load_dotenv()
+    colorid_lookup = os.getenv("COLORID_")
+    if colorid_lookup is None:
+        return "1"
+    colorid_lookup = eval(colorid_lookup)
+    if name in colorid_lookup:
+        return colorid_lookup[name]
+    return "1"
     return (
         "8"
         if name == "Supervised Study"
