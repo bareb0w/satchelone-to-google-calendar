@@ -33,9 +33,17 @@ def get_calendars(service):
 
 
 def get_school_calendar(service=get_service()):
+    import os
+    from dotenv import load_dotenv
+
+    load_dotenv()
+    calendar_name = os.getenv('CALENDARNAME')
+    if not calendar_name:
+        calendar_name = "school"
+    
     calendars = get_calendars(service)
     return [
-        calendar for calendar in calendars["items"] if calendar["summary"] == "school"
+        calendar for calendar in calendars["items"] if calendar["summary"] == calendar_name
     ][0]
 
 
