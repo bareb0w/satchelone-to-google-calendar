@@ -60,6 +60,27 @@ def convert_to_datetime(date_string):
 
 
 def adjust_time_datetime(start, end):
+    import dotenv
+    import os
+
+    dotenv.load_dotenv()
+    timeoffset = os.getenv("TIMEOFFSET")
+    lessonlength = os.getenv("LESSONLENGTH")
+    if timeoffset is None:
+        return start, end
+    timeoffset = eval(timeoffset)
+    lessonlength = int(lessonlength)
+
+    for k, v in timeoffset.items():
+        k_hours, k_mins = k.split(",")
+        v_hours, v_mins = v.split(",")
+
+        if start.hour == int(k_hours) and start.minute == int(k_mins):
+            start = start.replace(hour=int(v_hours), minute=int(v_mins))
+            end = end.replace(hour=int(v_hours) + int(lessonlength), minute=int(v_mins))
+            print("Updating time")
+    return start, end
+
     if end.hour == 10:
         # print("Lesson 2")
         start = start.replace(hour=10, minute=20)
@@ -105,17 +126,20 @@ def get_colorId(name):
 
 
 def create_event(service, calendarId, name, room, details, start, end):
-    start, end = adjust_time(start, end)
+    # start, end = adjust_time(start, end)
+    start = convert_to_datetime(start)
+    end = convert_to_datetime(end)
+    start, end = adjust_time_datetime(start, end)
     event = {
         "summary": name,
         "location": room,
         "description": details,
         "start": {
-            "dateTime": start,
+            "dateTime": start.strftime("%Y-%m-%dT%H:%M:%S%z"),
             "timeZone": "Europe/London",
         },
         "end": {
-            "dateTime": end,
+            "dateTime": end.strftime("%Y-%m-%dT%H:%M:%S%z"),
             "timeZone": "Europe/London",
         },
         # colorId is the colour of the event on the calendar, it can be any number from 1-11
@@ -141,7 +165,10 @@ def adjust_time(start, end):
 
 
 def update_event(service, calendarId, eventId, name, room, details, start, end):
-    start, end = adjust_time(start, end)
+    ## start, end = adjust_time(start, end)
+    start = convert_to_datetime(start)
+    end = convert_to_datetime(end)
+    start, end = adjust_time_datetime(start, end)
 
     # First retrieve the event from the API.
     event = service.events().get(calendarId=calendarId, eventId=eventId).execute()
@@ -150,11 +177,11 @@ def update_event(service, calendarId, eventId, name, room, details, start, end):
     event["location"] = room
     event["description"] = details
     event["start"] = {
-        "dateTime": start,
+        "dateTime": start.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "timeZone": "Europe/London",
     }
     event["end"] = {
-        "dateTime": end,
+        "dateTime": end.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "timeZone": "Europe/London",
     }
     event["colorId"] = get_colorId(name)
