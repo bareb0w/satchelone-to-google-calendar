@@ -10,3 +10,8 @@
 6. The request should also have an authorization header which you should also add to the .env file.
 7. Run `pip install -r requirements.txt` to install the required modules
 8. Run the `main.py` file to add the tasks to your google calendar.
+
+## Customisation
+
+- If you want to set custom colors for the events create an `COLORID` environment variable in the format of a python dictionary with the name of the event (from satchelone) and the colorid which ranges from 1-11
+- If your lesson times vary from times that satchelone shows then you can create an `TIMEOFFSET` environment variable in the format of a python dictionary with the old time as the key and the new time as the value
