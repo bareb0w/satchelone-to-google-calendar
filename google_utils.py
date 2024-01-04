@@ -93,24 +93,15 @@ def get_colorId(name):
     import os
 
     dotenv.load_dotenv()
-    colorid_lookup = os.getenv("COLORID_")
+    colorid_lookup = os.getenv("COLORID")
     if colorid_lookup is None:
-        return "1"
+        return "11"
     colorid_lookup = eval(colorid_lookup)
+    # print(colorid_lookup)
     if name in colorid_lookup:
         return colorid_lookup[name]
-    return "1"
-    return (
-        "8"
-        if name == "Supervised Study"
-        else "7"
-        if name == "Physics"
-        else "6"
-        if name == "Mathematic"
-        else "2"
-        if name == "Computing"
-        else "11"
-    )
+
+    return "11"
 
 
 def create_event(service, calendarId, name, room, details, start, end):
