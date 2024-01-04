@@ -22,8 +22,9 @@ def process_events(service, events):
             create_event(service, SCHOOL_CALENDAR["id"], *event)
             continue
         for gc_event in google_calendar_events:
-            print("Updating event: ", gc_event["id"])
-            print(update_event(service, SCHOOL_CALENDAR["id"], gc_event["id"], *event))
+            # print("Updating event: ", gc_event["id"])
+            # print(
+            update_event(service, SCHOOL_CALENDAR["id"], gc_event["id"], *event)  # )
 
 
 def add_lessons_to_calendar(service):
