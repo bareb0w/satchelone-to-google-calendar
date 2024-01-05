@@ -21,12 +21,6 @@ def get_attachments(authorization, attachment_ids):
         "x-platform": "web",
     }
 
-    params = {
-        "ids[]": [
-            "154047071",
-            "154069940",
-        ],
-    }
     params = {"ids[]": attachment_ids}
     response = requests.get(
         "https://api.satchelone.com/api/attachments", params=params, headers=headers
