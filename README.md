@@ -45,3 +45,11 @@ TIMEOFFSET = {"10,00":"10,20","12,20":"13,00"}
 LESSONLENGTH = 1
 CALENDARNAME = "school"
 ```
+
+## Limitations
+
+- The satchelone calendar only shows about 3 weeks worth of lessons you will need to set the script to run periodically (about once a week)
+
+## Warnings
+
+- **Do not** share your authorization token with anyone as it is possible to control most of satchelone's function using it like managing todos and possibly even submitting work to teachers.
