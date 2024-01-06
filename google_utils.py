@@ -78,12 +78,14 @@ def adjust_time_datetime(start, end):
     lessonlength = os.getenv("LESSONLENGTH")
     if timeoffset is None:
         return start, end
+    if lessonlength is None:
+        lessonlength = 1
     timeoffset = eval(timeoffset)
     lessonlength = int(lessonlength)
 
     for k, v in timeoffset.items():
-        k_hours, k_mins = k.split(",")
-        v_hours, v_mins = v.split(",")
+        k_hours, k_mins = k.split(":")
+        v_hours, v_mins = v.split(":")
 
         if start.hour == int(k_hours) and start.minute == int(k_mins):
             start = start.replace(hour=int(v_hours), minute=int(v_mins))
