@@ -3,12 +3,14 @@ import requests
 
 import os
 from dotenv import load_dotenv
+from utils import get_user_id_and_school_id_for_authtoken
 
 load_dotenv()
 
 AUTHORIZATION = os.getenv("AUTHORIZATION")
-USER_ID = os.getenv("USER_ID")
-SCHOOL_ID = os.getenv("SCHOOL_ID")
+USER_ID, SCHOOL_ID = get_user_id_and_school_id_for_authtoken(AUTHORIZATION)
+# USER_ID = os.getenv("USER_ID")
+# SCHOOL_ID = os.getenv("SCHOOL_ID")
 
 
 def get_events(
@@ -42,6 +44,10 @@ def get_events(
         params=params,
         headers=headers,
     )
+    if response.status_code != 200:
+        raise Exception(
+            f"Error getting events from Satchel. Status code: {response.status_code}"
+        )
     return response.json()
 
 
@@ -84,7 +90,6 @@ def get_all_events_from_satchel():
                 continue
             lessons = day["lessons"]
             add_to_calendar = process_all_lessons(lessons, add_to_calendar)
-            print(add_to_calendar)
         start_date = start_date + timedelta(days=7)
 
     # start_date is now the date of the last lesson

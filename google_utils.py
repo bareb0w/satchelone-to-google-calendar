@@ -37,13 +37,15 @@ def get_school_calendar(service=get_service()):
     from dotenv import load_dotenv
 
     load_dotenv()
-    calendar_name = os.getenv('CALENDARNAME')
+    calendar_name = os.getenv("CALENDARNAME")
     if not calendar_name:
         calendar_name = "school"
-    
+
     calendars = get_calendars(service)
     return [
-        calendar for calendar in calendars["items"] if calendar["summary"] == calendar_name
+        calendar
+        for calendar in calendars["items"]
+        if calendar["summary"] == calendar_name
     ][0]
 
 
@@ -86,18 +88,6 @@ def adjust_time_datetime(start, end):
         if start.hour == int(k_hours) and start.minute == int(k_mins):
             start = start.replace(hour=int(v_hours), minute=int(v_mins))
             end = end.replace(hour=int(v_hours) + int(lessonlength), minute=int(v_mins))
-            print("Updating time")
-    return start, end
-
-    if end.hour == 10:
-        # print("Lesson 2")
-        start = start.replace(hour=10, minute=20)
-        end = end.replace(hour=11, minute=20)
-
-    elif end.hour == 12:
-        # print("Lesson 4")
-        start = start.replace(hour=13, minute=0)
-        end = end.replace(hour=14, minute=0)
     return start, end
 
 

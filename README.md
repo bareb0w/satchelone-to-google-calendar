@@ -49,6 +49,7 @@ CALENDARNAME = "school"
 ## Limitations
 
 - The satchelone calendar only shows about 3 weeks worth of lessons you will need to set the script to run periodically (about once a week)
+- The auth token is only valid for ~1 month which will need to be manually replace after it expires
 
 ## Warnings
 

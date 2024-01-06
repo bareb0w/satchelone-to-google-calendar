@@ -1,4 +1,3 @@
-import os.path
 from google_utils import (
     get_service,
     get_school_calendar,
@@ -14,7 +13,6 @@ def process_events(service, events):
     # If it does, it updates the event
     # If it doesn't, it creates the event
     for event in events.values():
-        print(event)
         google_calendar_events = check_if_event_exists(
             service, SCHOOL_CALENDAR["id"], *event
         )
@@ -35,16 +33,6 @@ def add_lessons_to_calendar(service):
 def add_events_to_calendar(service):
     add_to_calendar, _ = get_all_school_events()
     process_events(service, add_to_calendar)
-
-
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-AUTHORIZATION = os.getenv("AUTHORIZATION")
-USER_ID = os.getenv("USER_ID")
-SCHOOL_ID = os.getenv("SCHOOL_ID")
 
 
 if __name__ == "__main__":
