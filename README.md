@@ -4,12 +4,11 @@
 
 1. Create a new Google cloud desktop project and enable the google calendar api.
 2. Put the credentials.json into the root of the repo
-3. Create a calendar in your google account called `school` which is what the script will add the lessons to
+3. Create a calendar in your google account called `school` (or any other name just add it to your .env file) which is what the script will add the lessons to
 4. Open up satchelone.com, open up the network tab of your browser. Load the timetable page and you should see an API request to `"/api/timetable/school/{school_id}/student/{student_id}?requestDate={some_date}"`
-5. Add your school id and student id to the .env file
-6. The request should also have an authorization header which you should also add to the .env file.
-7. Run `pip install -r requirements.txt` to install the required modules
-8. Run the `main.py` file to add the tasks to your google calendar.
+5. The request should have an authorization header which you should also add to the .env file, from this the script is able to find your school's id and your student_id as it is just base64 encoded.
+6. Run `pip install -r requirements.txt` to install the required modules
+7. Run the `main.py` file to add the tasks to your google calendar.
 
 ## Customisation
 
@@ -38,8 +37,6 @@
 
 ``` python
 AUTHORIZATION = 'Bearer ###########################################################################################################################################################################################################################################################'
-USER_ID = '########'
-SCHOOL_ID = '#####'
 COLORID = {"Supervised Study":"8","Physics":"7","Mathematic":"6","Computing":"2","PE":"11","Curriculum enriched":"3"}
 TIMEOFFSET = {"10,00":"10,20","12,20":"13,00"}
 LESSONLENGTH = 1
