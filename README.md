@@ -1,25 +1,44 @@
 # satchelone-to-google-calendar
 
-## Setup
+## **Setup**
 
-1. Create a new Google cloud desktop project and enable the google calendar api.
-2. Put the credentials.json into the root of the repo
-3. Create a calendar in your google account called `school` (or any other name just add it to your .env file) which is what the script will add the lessons to
-4. Open up satchelone.com, open up the network tab of your browser. Load the timetable page and you should see an API request to `"/api/timetable/school/{school_id}/student/{student_id}?requestDate={some_date}"`
-5. The request should have an authorization header which you should also add to the .env file, from this the script is able to find your school's id and your student_id as it is just base64 encoded.
-6. Run `pip install -r requirements.txt` to install the required modules
-7. Run the `main.py` file to add the tasks to your google calendar.
+1. **Google Cloud Project**:
+    - Create a new Google Cloud Desktop project.
+    - Enable the Google Calendar API.
+  
+2. **Credentials**:
+    - Place `credentials.json` (from your google cloud project) in the root of the repository.
+  
+3. **Google Calendar**:
+    - Create a calendar in your Google account (e.g., 'school') and add it to your `.env` file.
+  
+4. **Network Tab**:
+    - Open `satchelone.com`, navigate to the timetable page.
+    - In the network tab, load the timetable page to capture the API request.
+    - Add the authorization header to the `.env` file.
 
-## Customisation
+5. **Install Dependencies**:
+    - Run `pip install -r requirements.txt` to install necessary modules.
+  
+6. **Run Script**:
+    - Execute `main.py` to populate your Google Calendar with lessons.
+  
+## Customization
 
-- If you want to set custom colors for the events create an `COLORID` environment variable in the format of a python dictionary with the name of the event (from satchelone) and the colorid which ranges from 1-11
-- If your lesson times vary from times that satchelone shows then you can create an `TIMEOFFSET` environment variable in the format of a python dictionary with the time in the format `hh:mm` as the key and the new time as the value in the same format and add the length of your lessons in hours to the `LESSONLENGTH` environment variable
-- If you want to change the name of the calendar that the events are added to then change the `CALENDARNAME` environment variable. Make sure the calendar exists in your google account first.
+- **Event Colors**:
 
-- ColorID can be set to any of the following:
-  The colors Google will show for each of the first 11 integers you can set colorId to.
+  - Set custom colors using the `COLORID` environment variable in the format: `{"EventName":"ColorID"}` (1-11).
+- **Time Adjustments**:
 
-``` text
+  - Modify lesson times with `TIMEOFFSET` in the format: `{"OldTime":"NewTime"}`.
+  - Set lesson length with `LESSONLENGTH` in hours.
+- **Calendar Name**:
+
+  - Change the calendar name with `CALENDARNAME` in the `.env` file (ensure it exists in your Google account).
+
+## Possible Colors For The Events
+
+```text
 1 blue
 2 green
 3 purple
@@ -36,7 +55,7 @@
 ## Example .env file
 
 ``` python
-AUTHORIZATION = 'Bearer ###########################################################################################################################################################################################################################################################'
+AUTHORIZATION = 'Bearer <YourToken>'
 COLORID = {"Supervised Study":"8","Physics":"7","Mathematic":"6","Computing":"2","PE":"11","Curriculum enriched":"3"}
 TIMEOFFSET = {"10:00":"10:20","12:20":"13:00"}
 LESSONLENGTH = 1 #hours
@@ -45,9 +64,10 @@ CALENDARNAME = "School Timetable"
 
 ## Limitations
 
-- The satchelone calendar only shows about 3 weeks worth of lessons you will need to set the script to run periodically (about once a week)
-- The auth token is only valid for ~1 month which will need to be manually replace after it expires
+- The SatchelOne calendar displays approximately 3 weeks of lessons; set the script to run periodically (e.g., weekly).
+- Auth token is valid for ~1 month, manually replace after expiration.
 
 ## Warnings
 
-- **Do not** share your authorization token with anyone as it is possible to control most of satchelone's function using it like managing todos and possibly even submitting work to teachers.
+- **Authorization Token**:
+  - Never share your authorization token to prevent potential misuse on SatchelOne.
