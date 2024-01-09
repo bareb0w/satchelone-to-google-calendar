@@ -1,6 +1,8 @@
 # Creds
 *.json
 CRON_WORKING
+*.bak
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
