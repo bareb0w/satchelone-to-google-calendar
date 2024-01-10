@@ -1,7 +1,8 @@
 import base64
+from typing import Tuple
 
-
-def get_user_id_and_school_id_for_authtoken(AUTHORIZATION):
+def get_user_id_and_school_id_for_authtoken(AUTHORIZATION: str
+    ) -> Tuple[int, int]:
     base64_message = AUTHORIZATION.split(" ")[1]
     base64_bytes = base64_message.encode("ascii")
     message_bytes = base64.b64decode(base64_bytes)
