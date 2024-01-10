@@ -5,7 +5,10 @@ from google_utils import (
     update_event,
     check_if_event_exists,
 )
-from satchel_utils import get_all_events_from_satchel, get_all_school_events
+from satchel_utils import (
+    get_all_events_from_satchel, 
+    get_all_school_events,
+)
 
 
 def process_events(service, events):
