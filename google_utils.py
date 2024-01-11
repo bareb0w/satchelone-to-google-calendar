@@ -1,7 +1,14 @@
 import os.path
 from datetime import datetime
+from typing import (
+    Dict, 
+    List,
+    Tuple,
+    Union,
+    Any,
+)
 
-
+from googleapiclient.discovery import Resource
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -12,7 +19,7 @@ from googleapiclient.errors import HttpError
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 
-def get_service():
+def get_service() -> Resource:
     creds = None
     if os.path.exists("token.json"):
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
@@ -27,12 +34,12 @@ def get_service():
     return build("calendar", "v3", credentials=creds)
 
 
-def get_calendars(service):
+def get_calendars(service: Resource) -> Dict[str, Any]:
     calendars = service.calendarList().list().execute()
     return calendars
 
 
-def get_school_calendar(service=get_service()):
+def get_school_calendar(service=get_service()) -> Dict[str, Any]:
     import os
     from dotenv import load_dotenv
 
@@ -49,7 +56,12 @@ def get_school_calendar(service=get_service()):
     ][0]
 
 
-def get_all_events_from_google_calendar(service, calendarId, start_date, end_date):
+def get_all_events_from_google_calendar(
+    service: Resource, 
+    calendarId: str, 
+    start_date: datetime, 
+    end_date: datetime,
+) -> List[Dict[str, Any]]:
     events_result = (
         service.events()
         .list(
@@ -65,11 +77,15 @@ def get_all_events_from_google_calendar(service, calendarId, start_date, end_dat
     return events
 
 
-def convert_to_datetime(date_string):
+def convert_to_datetime(date_string: str) -> datetime:
     return datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S%z")
 
 
-def adjust_time_datetime(start, end):
+def adjust_time_datetime(
+    start: datetime, 
+    end: datetime
+) -> Tuple:
+    
     import dotenv
     import os
 
@@ -93,7 +109,19 @@ def adjust_time_datetime(start, end):
     return start, end
 
 
-def check_if_event_exists(service, calendarId, name, room, details, start, end):
+def check_if_event_exists(
+    service: Resource, 
+    calendarId: str,
+    name, 
+    room, 
+    details, 
+    start: datetime, 
+    end: datetime
+) -> Union( # return either a boolean OR a List[Dict[str, any]]
+    bool, 
+    List[Dict[str, Any]]
+):
+    
     # converts the following date format into a datetime object
     # 2024-01-18T12:20:00+00:00
 
@@ -109,7 +137,7 @@ def check_if_event_exists(service, calendarId, name, room, details, start, end):
         return events
 
 
-def get_colorId(name):
+def get_colorId(name: str) -> str:
     import dotenv
     import os
 
@@ -125,7 +153,15 @@ def get_colorId(name):
     return "11"
 
 
-def create_event(service, calendarId, name, room, details, start, end):
+def create_event(
+    service: Resource, 
+    calendarId: str,
+    name: str, 
+    room: str, 
+    details: str, 
+    start: datetime, 
+    end: datetime
+):
     # start, end = adjust_time(start, end)
     start = convert_to_datetime(start)
     end = convert_to_datetime(end)
@@ -150,7 +186,10 @@ def create_event(service, calendarId, name, room, details, start, end):
     return event
 
 
-def adjust_time(start, end):
+def adjust_time(
+    start: datetime, 
+    end: datetime
+) -> Tuple[datetime, datetime]:
     # print(start.split(":")[0].split("T")[1])
     # print(end[-14:])
     if "10:00:00+00:00" == start[-14:]:

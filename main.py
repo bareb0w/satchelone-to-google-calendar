@@ -10,8 +10,12 @@ from satchel_utils import (
     get_all_school_events,
 )
 
+from typing import (
+    Dict,
+    List,
+)
 
-def process_events(service, events):
+def process_events(service, events: Dict[str,List[str]]) -> None:
     # Checks if the event already exists in the calendar
     # If it does, it updates the event
     # If it doesn't, it creates the event
