@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from google_utils import (
     get_service,
     get_school_calendar,
