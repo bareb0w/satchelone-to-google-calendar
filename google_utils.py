@@ -84,7 +84,7 @@ def convert_to_datetime(date_string: str) -> datetime:
 def adjust_time_datetime(
     start: datetime, 
     end: datetime
-) -> Tuple:
+) -> Tuple[datetime, datetime]:
     
     import dotenv
     import os
