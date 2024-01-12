@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from google_utils import (
     get_service,
     get_school_calendar,
@@ -5,10 +7,17 @@ from google_utils import (
     update_event,
     check_if_event_exists,
 )
-from satchel_utils import get_all_events_from_satchel, get_all_school_events
+from satchel_utils import (
+    get_all_events_from_satchel, 
+    get_all_school_events,
+)
 
+from typing import (
+    Dict,
+    List,
+)
 
-def process_events(service, events):
+def process_events(service, events: Dict[str,List[str]]) -> None:
     # Checks if the event already exists in the calendar
     # If it does, it updates the event
     # If it doesn't, it creates the event

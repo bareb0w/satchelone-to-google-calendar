@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import requests
+from typing import List, Dict, Tuple, Any
 
 import os
 from dotenv import load_dotenv
@@ -14,8 +15,11 @@ USER_ID, SCHOOL_ID = get_user_id_and_school_id_for_authtoken(AUTHORIZATION)
 
 
 def get_events(
-    authorization, user_id, school_id, start_date=datetime.now().strftime("%Y-%m-%d")
-):
+    authorization: str, 
+    user_id: int, 
+    school_id: int, 
+    start_date=datetime.now().strftime("%Y-%m-%d")
+) -> Dict[str, Any]:
     headers = {
         "authority": "api.satchelone.com",
         "accept": "application/smhw.v2021.5+json",
@@ -51,7 +55,10 @@ def get_events(
     return response.json()
 
 
-def process_all_lessons(lessons, add_to_calendar):
+def process_all_lessons(
+    lessons: List[Dict[str,Any]], 
+    add_to_calendar: Dict[str,List[str]]
+) -> Dict[str,List[str]]:
     for lesson in lessons:
         # print(lesson)
         name = lesson["classGroup"]["subject"]
@@ -77,7 +84,8 @@ def process_all_lessons(lessons, add_to_calendar):
     return add_to_calendar
 
 
-def get_all_events_from_satchel():
+def get_all_events_from_satchel(     
+) -> Tuple[Dict[str,List[str]], datetime]:
     start_date = datetime.now()
     add_to_calendar = {}
     for _ in range(10):
@@ -96,7 +104,8 @@ def get_all_events_from_satchel():
     return add_to_calendar, start_date
 
 
-def get_all_school_events():
+def get_all_school_events(
+) -> Tuple[Dict[str,List[str]], datetime]:
     add_to_calendar = {}
     start_date = datetime.datetime.now()
     for _ in range(100):
